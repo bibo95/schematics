@@ -43,13 +43,13 @@ This repository has `.tf` configuration for the deployment of Agent infrastructu
 
 ## Using tar files
 
-The respository contains the solution templates in the form of `tar` files to install the `Agent infrastructure` and deploy the `Agent service`. Perform following steps to use the `tar` file.
+The release contains the solution templates in the form of `tar` files to install the `Agent infrastructure` and deploy the `Agent service`. Perform following steps to use the `tar` file.
 
-- Download the `/templates/templates.zip` file to your local system.
-- From your terminal extract the content of `zip` file using the command. `unzip templates.zip`
+- Download the schematics-agents release to your local system.
+- From your terminal extract the content of `schematics-agents.tgz`
 - The templates as TAR files should now be available as
    - The `agent-infrastructure-templates.tar` for setting up the VPC, IKS cluster, and LogDNA services infrastructure. 
-   - The `agent-service-templates.tar` to deploy the Agent service into your infrastructure. 
+   - The `agent-service-templates.tar` to deploy the Agent service into your infrastructure.
 
 ## Infrastructure
     
@@ -76,17 +76,14 @@ Click [here](https://cloud.ibm.com/docs/schematics?topic=schematics-agents-setup
 | ---------- | -------- | -------------- | ---------- | ----------- | ----------- |
 | agent_prefix | You will use this prefix, for `vpc`, `cluster`, and  `observability`. (Maximum length 27 chars) |  |  | my-project |  |
 | location | Location of the Agent infrastructure.  Note: For Beta, the Agent must be deployed in a freshly provisioned `VPC`, `IKS Cluster`, `Log Analysis` instances. |  |  | `us-south` |  |
-| resource_group_name | Name of resource group used where Agent infrastructure was provisioned. | string | &check; | |  |
 | tags | A list of tags for the Agent infrastructure | list(string) | | my-project:agent | |
 | ibmcloud_api_key | The IBM Cloud API Key used to provision the schematics Agent infrastructure resources. If not provided, then resources will be provisioned in currently logged in user account. | string | | | &check; |
 | agent_name | Name of the agent. | string | | my-project | |
 | location| Location of the agent services.  It must be the same as the agent infrastructure/cluster location. | string | | us-south | |
-| resource_group_name | Name of resource group used where agent infrastructure was provisioned. | string | &check; | | |
 | profile_id | The IBM Cloud IAM Trusted Profile ID which provides authorization for agents to process jobs. More info can be found [here](https://cloud.ibm.com/docs/account?topic=account-create-trusted-profile&interface=ui) | string | &check; | | &check; |
 | schematics_endpoint_location | Location of the schematics endpoint. This location is used to connect your agent with schematics service. The valid locations are us/eu/us-south/us-east/eu-de/eu-gb | string | | `us-south` | |
 | cluster_id | ID of the cluster used to run the agent service. | string | &check; | | |
 | logdna_name | Name of the IBM Log Analysis service instance, used to send the agent logs. | string | &check; | | |
-| ibmcloud_api_key | The IBM Cloud API Key used to deploy the schematics agent resources. If not provided, resources will be deployed using the logged in user credentials. | string | | | &check; |
 
 ## Outputs
 
