@@ -20,7 +20,7 @@ resource "kubernetes_config_map" "jobrunner_configmap" {
   }
 
   data = {
-    JR_PROFILEID          = var.profile_id
+    JR_PROFILEID          = ibm_iam_trusted_profile.iam_trusted_profile.id
     JR_AGENTNAME          = var.agent_name
     JR_AGENTLOCATION     = var.location
     JR_ALLOWMULTIPLEAGENTS = "true"

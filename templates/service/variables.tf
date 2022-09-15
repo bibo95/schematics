@@ -36,15 +36,6 @@ variable "resource_group_name" {
   # }
 }
 
-##############################################################################
-
-variable "profile_id" {
-  default     = ""
-  description = "The IBM Cloud [IAM Trusted Profile ID](https://cloud.ibm.com/docs/account?topic=account-create-trusted-profile&interface=ui) which provides authorization for agents to process jobs."
-  type        = string
-  sensitive   = true
-}
-
 
 variable "schematics_endpoint_location" {
   description = "Location of the schematics endpoint. This location is used to connect your agent with schematics service. The valid locations are us|eu|us-south|us-east|eu-de|eu-gb"
