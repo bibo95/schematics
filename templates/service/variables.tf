@@ -85,4 +85,12 @@ variable "ibmcloud_api_key" {
   default     = ""
 }
 
+
+variable "ansible_pull_ibmcloud_api_key" {
+  description = "The IBM Cloud API Key used to pull ansible images"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
 ##############################################################################

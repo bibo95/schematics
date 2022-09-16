@@ -64,14 +64,6 @@ resource "kubernetes_config_map" "runtime_ansible_job_configmap" {
     ANSIBLE_JOB_OPPONENTSCA = ""
     #ANSIBLE_JOB_CERTPEM = ""
     #ANSIBLE_JOB_KEYPEM = ""
-    ADAPTER_HTTPPORT = "4001"
-    ADAPTER_MAXRETRIES = ""
-    ADAPTER_LOCATION = "us-south"
-    ADAPTER_LOGGERLEVEL = "-1"
-    ADAPTER_ATLOGGERLEVEL = "-1"
-    ADAPTER_EXTLOGGERLEVEL = "-1"
-    ADAPTER_EXTLOGPATH = "/var/log/schematics/%s.log"
-    ADAPTER_PLUGINHOME = "/go/src/github.ibm.com/blueprint/schematics-data-adapter/plugins"
   }
 
   depends_on = [kubernetes_namespace.namespace]
@@ -80,7 +72,7 @@ resource "kubernetes_config_map" "runtime_ansible_job_configmap" {
 
 resource "kubernetes_config_map" "runtime_adapter_job_configmap" {
   metadata {
-    name      = "schematics-runtime-ansible-job-config"
+    name      = "schematics-runtime-adapter-job-config"
     namespace = "schematics-runtime"
   }
 
@@ -122,6 +114,26 @@ resource "kubernetes_service" "ansible_job_service" {
   depends_on = [kubernetes_namespace.namespace]
 }
 
+//creating image pull secret for ansible job
+// TODO Remove this once the Ansible and adpater is released
+resource "kubernetes_secret" "schematics-ansible-secret" {
+  metadata {
+    name      = "schematics-runtime-ansible-job-image-secret"
+    namespace = "schematics-runtime"
+  }
+  data = {
+    ".dockerconfigjson" = jsonencode({
+      auths = {
+        "us.icr.io" = {
+          auth = base64encode("iamapikey:${var.ansible_pull_ibmcloud_api_key}")
+        }
+      }
+    })
+  }
+  type = "kubernetes.io/dockerconfigjson"
+  depends_on = [kubernetes_namespace.namespace]
+}
+
 
 resource "kubernetes_deployment" "runtime_ansible_job" {
   timeouts {
@@ -155,7 +167,6 @@ resource "kubernetes_deployment" "runtime_ansible_job" {
       metadata {
         labels = {
           app = "runtime-ansible-job"
-
           build = "ansible-job-1338"
         }
       }
@@ -200,16 +211,15 @@ resource "kubernetes_deployment" "runtime_ansible_job" {
         }
 
         image_pull_secrets {
-          name = "schematics-runtime-job-image-secret"
+          name = "schematics-runtime-ansible-job-image-secret"
         }
 
         container {
-          name  = "runtime-job"
+          name  = "runtime-ansible-job"
           image = local.schematics_runtime_ansible_job_image
-
           port {
             name           = "grpc-job"
-            container_port = 3002
+            container_port = 3006
           }
 
           env_from {
@@ -254,10 +264,9 @@ resource "kubernetes_deployment" "runtime_ansible_job" {
             run_as_non_root = true
           }
         }
-
         container {
           name  = "adapter"
-          image = "us.icr.io/$${CR_NAMESPACE}/schematics-data-adapter:$${ADAPTER_IMAGE_TAG}"
+          image = local.schematics_runtime_adapter_job_image
 
           env_from {
             config_map_ref {
@@ -296,7 +305,6 @@ resource "kubernetes_deployment" "runtime_ansible_job" {
         termination_grace_period_seconds = 180000
       }
     }
-
     strategy {
       type = "RollingUpdate"
 
@@ -311,7 +319,5 @@ resource "kubernetes_deployment" "runtime_ansible_job" {
 
   depends_on = [kubernetes_service.job_service, kubernetes_config_map.runtime_ansible_job_configmap,kubernetes_config_map.runtime_adapter_job_configmap, kubernetes_namespace.namespace]
 }
-
-
 
 ##############################################################################
