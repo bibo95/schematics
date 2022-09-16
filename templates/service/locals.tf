@@ -23,6 +23,8 @@ locals {
   schematics_runtime_job_image = "icr.io/schematics-remote/schematics-agent-ws-job-20220704:60824f4e-276"
   #Schematics agent ansible image ID
   schematics_runtime_ansible_job_image = "us.icr.io/schematics/schematics-ansible-job:b164f614-171"
+  #Schematics agent adapter image ID
+  schematics_runtime_adapter_job_image = "us.icr.io/schematics/schematics-data-adapter:48537ed2-62"
   #schematics_sandbox_image
   schematics_sandbox_image = "icr.io/schematics-remote/schematics-sandbox:9bdc3645-283"
   #Schematics environment (dev|stage|prod)

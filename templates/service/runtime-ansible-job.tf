@@ -78,6 +78,27 @@ resource "kubernetes_config_map" "runtime_ansible_job_configmap" {
 
 }
 
+resource "kubernetes_config_map" "runtime_adapter_job_configmap" {
+  metadata {
+    name      = "schematics-runtime-ansible-job-config"
+    namespace = "schematics-runtime"
+  }
+
+  data = {
+    ADAPTER_HTTPPORT = "4001"
+    ADAPTER_MAXRETRIES = ""
+    ADAPTER_LOCATION = "us-south"
+    ADAPTER_LOGGERLEVEL = "-1"
+    ADAPTER_ATLOGGERLEVEL = "-1"
+    ADAPTER_EXTLOGGERLEVEL = "-1"
+    ADAPTER_EXTLOGPATH = "/var/log/schematics/%s.log"
+    ADAPTER_PLUGINHOME = "/go/src/github.ibm.com/blueprint/schematics-data-adapter/plugins"
+  }
+
+  depends_on = [kubernetes_namespace.namespace]
+
+}
+
 resource "kubernetes_service" "ansible_job_service" {
   metadata {
     name      = "ansible-job-service"
@@ -234,15 +255,63 @@ resource "kubernetes_deployment" "runtime_ansible_job" {
           }
         }
 
+        container {
+          name  = "adapter"
+          image = "us.icr.io/$${CR_NAMESPACE}/schematics-data-adapter:$${ADAPTER_IMAGE_TAG}"
+
+          env_from {
+            config_map_ref {
+              name = "schematics-runtime-adapter-job-config"
+            }
+          }
+
+          port {
+            name           = "http-adapter"
+            container_port = 4001
+          }
+          resources {
+            limits = {
+              cpu    = "500m"
+              memory = "1Gi"
+            }
+
+            requests = {
+              cpu    = "500m"
+              memory = "1Gi"
+            }
+          }
+
+          volume_mount {
+            name       = "at-events"
+            mount_path = "/var/log/at"
+          }
+
+          volume_mount {
+            name       = "ext-logs"
+            mount_path = "/var/log/schematics"
+          }
+        }
+
         restart_policy                   = "Always"
         termination_grace_period_seconds = 180000
+      }
+    }
+
+    strategy {
+      type = "RollingUpdate"
+
+      rolling_update {
+        max_unavailable = "1"
+        max_surge       = "1"
       }
     }
 
     revision_history_limit = 5
   }
 
-  depends_on = [kubernetes_service.job_service, kubernetes_config_map.runtime_ansible_job_configmap, kubernetes_namespace.namespace]
+  depends_on = [kubernetes_service.job_service, kubernetes_config_map.runtime_ansible_job_configmap,kubernetes_config_map.runtime_adapter_job_configmap, kubernetes_namespace.namespace]
 }
+
+
 
 ##############################################################################
