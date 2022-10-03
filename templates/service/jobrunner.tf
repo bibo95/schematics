@@ -98,6 +98,7 @@ resource "kubernetes_deployment" "jobrunner" {
   metadata {
     name      = "jobrunner"
     namespace = "schematics-job-runtime"
+    
 
     labels = {
       app = "jobrunner"
