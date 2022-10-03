@@ -99,7 +99,6 @@ resource "kubernetes_deployment" "jobrunner" {
     name      = "jobrunner"
     namespace = "schematics-job-runtime"
     
-
     labels = {
       app = "jobrunner"
       appcode = "AP24664"
