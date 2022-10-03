@@ -50,7 +50,7 @@ resource "kubernetes_secret" "schematics-sandbox-secret" {
   data = {
     ".dockerconfigjson" = jsonencode({
       auths = {
-        "icr.io" = {
+        "private.fr2.icr.io" = {
           auth = base64encode("iamapikey:${var.ibmcloud_api_key}")
         }
       }
@@ -137,7 +137,7 @@ resource "kubernetes_deployment" "sandbox" {
 
         init_container {
           name    = "fix-permissions"
-          image   = "icr.io/schematics-remote/ubi-minimal:8.6"
+          image   = "private.fr2.icr.io/schematics-remote/ubi-minimal:8.6"
           command = ["sh", "-c", "chmod -R a+rwx /var/log/at"]
 
           volume_mount {
@@ -156,7 +156,7 @@ resource "kubernetes_deployment" "sandbox" {
 
         init_container {
           name    = "fix-permissions-extlog"
-          image   = "icr.io/schematics-remote/ubi-minimal:8.6"
+          image   = "private.fr2.icr.io/schematics-remote/ubi-minimal:8.6"
           command = ["sh", "-c", "chmod -R a+rwx /var/log/schematics"]
 
           volume_mount {
