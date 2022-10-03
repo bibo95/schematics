@@ -15,7 +15,7 @@
 
 data "ibm_resource_instance" "logdna" {
   name              = var.logdna_name
-  resource_group_id = data.ibm_resource_group.resource_group.id
+  resource_group_id = data.ibm_resource_group.resource_group_logdna.id
 }
 
 resource "ibm_resource_key" "logdna_key" {
