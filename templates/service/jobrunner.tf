@@ -252,14 +252,14 @@ resource "kubernetes_deployment" "jobrunner" {
               }
             }
           }
-          service_account_name ="jobrunner"
+          
           security_context {
             run_as_user     = 1001
             run_as_group    = 1001
             run_as_non_root = true
           }
         }
-
+        service_account_name ="jobrunner"
         restart_policy                   = "Always"
         termination_grace_period_seconds = 180000
       }
