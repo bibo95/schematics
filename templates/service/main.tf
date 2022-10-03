@@ -29,8 +29,13 @@ provider "ibm" {
 data "ibm_resource_group" "resource_group" {
   name = var.resource_group_name
 }
-
 ##############################################################################
+# Resource Group where LOGDNA is created
+##############################################################################
+
+data "ibm_resource_group" "resource_group_logdna" {
+  name = var.resource_group_name_logdna
+}
 
 
 ##############################################################################
