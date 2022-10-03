@@ -159,7 +159,7 @@ resource "kubernetes_deployment" "runtime_job" {
 
         init_container {
           name    = "fix-permissions"
-          image   = "icr.io/schematics-remote/ubi-minimal:8.6"
+          image   = "private.fr2.icr.io/schematics-remote/ubi-minimal:8.6"
           command = ["sh", "-c", "chmod -R a+rwx /var/log/at"]
 
           volume_mount {
@@ -170,7 +170,7 @@ resource "kubernetes_deployment" "runtime_job" {
 
         init_container {
           name    = "fix-permissions-extlog"
-          image   = "icr.io/schematics-remote/ubi-minimal:8.6"
+          image   = "private.fr2.icr.io/schematics-remote/ubi-minimal:8.6"
           command = ["sh", "-c", "chmod -R a+rwx /var/log/schematics"]
 
           volume_mount {
