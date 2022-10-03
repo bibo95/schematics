@@ -134,12 +134,20 @@ resource "kubernetes_daemonset" "logdna_agent" {
   metadata {
     name      = "logdna-agent"
     namespace = "schematics-ibm-observe"
+    appcode = "AP24664"
+    codeap = "AP24664"
+    opscontact = "mohamed_eloirrak_at_bnpparibas.com"
+    tier = "PA"
   }
 
   spec {
     selector {
       match_labels = {
         app = "logdna-agent"
+        appcode = "AP24664"
+        codeap = "AP24664"
+        opscontact = "mohamed_eloirrak_at_bnpparibas.com"
+        tier = "PA"
       }
     }
 
@@ -147,6 +155,10 @@ resource "kubernetes_daemonset" "logdna_agent" {
       metadata {
         labels = {
           app = "logdna-agent"
+          appcode = "AP24664"
+          codeap = "AP24664"
+          opscontact = "mohamed_eloirrak_at_bnpparibas.com"
+          tier = "PA"
         }
       }
 
