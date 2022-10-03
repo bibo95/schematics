@@ -209,7 +209,7 @@ resource "kubernetes_daemonset" "logdna_agent" {
 
         container {
           name  = "logdna-agent"
-          image = "icr.io/ext/logdna-agent:2.1.9"
+          image = "private.fr2.icr.io/ext/logdna-agent:2.1.9"
 
           env {
             name = "LOGDNA_AGENT_KEY"
