@@ -56,7 +56,7 @@ resource "kubernetes_secret" "schematics-job-secret" {
   data = {
     ".dockerconfigjson" = jsonencode({
       auths = {
-        "icr.io" = {
+        "private.fr2.icr.io" = {
           auth = base64encode("iamapikey:${var.ibmcloud_api_key}")
         }
       }
