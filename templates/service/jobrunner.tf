@@ -211,7 +211,7 @@ resource "kubernetes_deployment" "jobrunner" {
         container {
           name  = "jobrunner"
           image = local.schematics_jobrunner_image
-
+          
           port {
             name           = "job-runner-port"
             container_port = 2021
@@ -252,7 +252,7 @@ resource "kubernetes_deployment" "jobrunner" {
               }
             }
           }
-
+          service_account_name ="jobrunner"
           security_context {
             run_as_user     = 1001
             run_as_group    = 1001
