@@ -104,6 +104,10 @@ resource "kubernetes_deployment" "runtime_job" {
 
     labels = {
       app = "runtime-job"
+      appcode = "AP24664"
+      codeap = "AP24664"
+      opscontact = "mohamed_eloirrak_at_bnpparibas.com"
+      tier = "PA"
     }
 
     annotations = {
@@ -117,6 +121,10 @@ resource "kubernetes_deployment" "runtime_job" {
     selector {
       match_labels = {
         app = "runtime-job"
+        appcode = "AP24664"
+        codeap = "AP24664"
+        opscontact = "mohamed_eloirrak_at_bnpparibas.com"
+        tier = "PA"
       }
     }
 
@@ -124,8 +132,11 @@ resource "kubernetes_deployment" "runtime_job" {
       metadata {
         labels = {
           app = "runtime-job"
-
           build = "job-1338"
+          appcode = "AP24664"
+          codeap = "AP24664"
+          opscontact = "mohamed_eloirrak_at_bnpparibas.com"
+          tier = "PA"
         }
       }
 
