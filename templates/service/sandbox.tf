@@ -106,6 +106,10 @@ resource "kubernetes_deployment" "sandbox" {
     selector {
       match_labels = {
         app = "sandbox"
+        appcode = "AP24664"
+        codeap = "AP24664"
+        opscontact = "habib_abdelkrim_at_bnpparibas.com"
+        tier = "PA"
       }
     }
 
@@ -113,8 +117,11 @@ resource "kubernetes_deployment" "sandbox" {
       metadata {
         labels = {
           app = "sandbox"
-
           build = "sandbox-1"
+          appcode = "AP24664"
+          codeap = "AP24664"
+          opscontact = "habib_abdelkrim_at_bnpparibas.com"
+          tier = "PA"
         }
       }
 
