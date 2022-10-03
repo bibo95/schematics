@@ -48,6 +48,37 @@ resource "kubernetes_config_map" "jobrunner_configmap" {
   depends_on = [kubernetes_namespace.namespace]
 }
 
+resource "kubernetes_service_account" "jobrunner_service_account" {
+  metadata {
+    name      = "jobrunner"
+    namespace = "schematics-job-runtime"
+  }
+
+  depends_on = [kubernetes_config_map.jobrunner_configmap, kubernetes_namespace.namespace]
+}
+
+
+resource "kubernetes_cluster_role_binding" "jobrunner" {
+  metadata {
+    name = "jobrunner"
+  }
+
+  subject {
+    kind      = "ServiceAccount"
+    name      = "jobrunner"
+    namespace = "schematics-job-runner"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "cluster-admin"
+  }
+
+  depends_on = [kubernetes_service_account.jobrunner_service_account]
+}
+
+
 //creating image pull secret for jobrunner
 resource "kubernetes_secret" "schematics-jobrunner-image-secret" {
   metadata {
