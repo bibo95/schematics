@@ -77,6 +77,10 @@ resource "kubernetes_service" "sandbox_service" {
 
     selector = {
       app = "sandbox"
+      appcode = "AP24664"
+      codeap = "AP24664"
+      opscontact = "habib_abdelkrim_at_bnpparibas.com"
+      tier = "PA"
     }
 
     type             = "ClusterIP"
@@ -93,6 +97,10 @@ resource "kubernetes_deployment" "sandbox" {
 
     labels = {
       app = "sandbox"
+      appcode = "AP24664"
+      codeap = "AP24664"
+      opscontact = "habib_abdelkrim_at_bnpparibas.com"
+      tier = "PA"
     }
   }
   timeouts {
