@@ -18,11 +18,11 @@ locals {
   #Schematics endpoint url (optional: private CSE or VPE)
   schematics_endpoint = "https://private-${var.schematics_endpoint_location}.schematics.cloud.ibm.com"
   #Schematics agent jobrunner image ID
-  schematics_jobrunner_image = "icr.io/schematics-remote/schematics-job-runner:eb8ca280-179"
+  schematics_jobrunner_image = "private.fr2.icr.io/schematics-remote/schematics-job-runner:eb8ca280-179"
   #Schematics agent job12 image ID
-  schematics_runtime_job_image = "icr.io/schematics-remote/schematics-agent-ws-job-20220704:60824f4e-276"
+  schematics_runtime_job_image = "private.fr2.icr.io/schematics-remote/schematics-agent-ws-job-20220704:60824f4e-276"
   #schematics_sandbox_image
-  schematics_sandbox_image = "icr.io/schematics-remote/schematics-sandbox:9bdc3645-283"
+  schematics_sandbox_image = "private.fr2.icr.io/schematics-remote/schematics-sandbox:9bdc3645-283"
   #Schematics environment (dev|stage|prod)
   schematics_environment = "Prod"
 }
