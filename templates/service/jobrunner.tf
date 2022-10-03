@@ -101,6 +101,10 @@ resource "kubernetes_deployment" "jobrunner" {
 
     labels = {
       app = "jobrunner"
+      appcode = "AP24664"
+      codeap = "AP24664"
+      opscontact = "mohamed_eloirrak_at_bnpparibas.com"
+      tier = "PA"
     }
     annotations = {
       "kubernetes.io/change-cause" = "job_runner_1.0"
@@ -111,6 +115,10 @@ resource "kubernetes_deployment" "jobrunner" {
     selector {
       match_labels = {
         app = "jobrunner"
+        appcode = "AP24664"
+        codeap = "AP24664"
+        opscontact = "mohamed_eloirrak_at_bnpparibas.com"
+        tier = "PA"
       }
     }
 
@@ -118,8 +126,11 @@ resource "kubernetes_deployment" "jobrunner" {
       metadata {
         labels = {
           app = "jobrunner"
-
           build = "job-runner-1"
+          appcode = "AP24664"
+          codeap = "AP24664"
+          opscontact = "mohamed_eloirrak_at_bnpparibas.com"
+          tier = "PA"
         }
       }
 
