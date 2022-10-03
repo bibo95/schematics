@@ -36,6 +36,16 @@ variable "resource_group_name" {
   # }
 }
 
+variable "resource_group_name_logdna" {
+  description = "Name of resource group used where logdna was provisioned"
+  type        = string
+
+  # validation {
+  #   error_message = "Unique ID must begin and end with a letter and contain only letters, numbers, and - characters."
+  #   condition     = can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", var.resource_group))
+  # }
+}
+
 ##############################################################################
 
 variable "profile_id" {
@@ -52,8 +62,8 @@ variable "schematics_endpoint_location" {
   default     = "us-south"
 
   validation {
-    condition     = contains(["us-south", "us-east", "eu-de", "eu-gb", "eu-fr"], var.schematics_endpoint_location)
-    error_message = "Invalid input, options: \"us-south\", \"us-east\", \"eu-de\", \"eu-gb\"."
+    condition     = contains(["us-south", "us-east", "eu-de", "eu-gb", "eu-fr","eu-fr2"], var.schematics_endpoint_location)
+    error_message = "Invalid input, options: \"us-south\", \"us-east\", \"eu-de\", \"eu-gb\", \"eu-fr\"."
   }
 }
 
