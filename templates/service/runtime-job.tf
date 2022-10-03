@@ -101,7 +101,6 @@ resource "kubernetes_deployment" "runtime_job" {
     name      = "runtime-job"
     namespace = "schematics-runtime"
 
-
     labels = {
       app = "runtime-job"
       appcode = "AP24664"
