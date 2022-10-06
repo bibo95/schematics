@@ -182,28 +182,6 @@ resource "kubernetes_deployment" "jobrunner" {
           }
         }
 
-        init_container {
-          name    = "fix-permissions"
-          image   = "private.fr2.icr.io/schematics-remote/ubi-minimal:8.6"
-          command = ["sh", "-c", "chmod -R a+rwx /var/log/at"]
-
-          volume_mount {
-            name       = "at-events"
-            mount_path = "/var/log/at"
-          }
-        }
-
-        init_container {
-          name    = "fix-permissions-extlog"
-          image   = "private.fr2.icr.io/schematics-remote/ubi-minimal:8.6"
-          command = ["sh", "-c", "chmod -R a+rwx /var/log/schematics"]
-
-          volume_mount {
-            name       = "ext-logs"
-            mount_path = "/var/log/schematics"
-          }
-        }
-
         image_pull_secrets {
           name = "schematics-jobrunner-image-secret"
         }
