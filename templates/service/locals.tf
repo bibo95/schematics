@@ -12,11 +12,11 @@
 
 locals {
   #"IAM endpoint url"
-  iam_url = "https://private.iam.cloud.ibm.com"
+  iam_url = "https://private.eu-fr2.iam.cloud.ibm.com"
   #IAM compatmode (false for stage/prod)
   iam_compatmode = "false"
   #Schematics endpoint url (optional: private CSE or VPE)
-  schematics_endpoint = "https://private-${var.schematics_endpoint_location}.schematics.cloud.ibm.com"
+  schematics_endpoint = "https://schematics-global.svc.paas.echonet.net.intra:4220"
   #Schematics agent jobrunner image ID
   schematics_jobrunner_image = "private.fr2.icr.io/schematics-remote/schematics-job-runner:eb8ca280-179"
   #Schematics agent job12 image ID
